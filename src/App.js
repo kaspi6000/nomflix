@@ -1,9 +1,10 @@
 import React from "react";
 import { Router, Route } from "react-router-dom";
 import { createBrowserHistory } from "history";
-import Home from "./components/Home";
-import TV from "./components/Tv";
-import Search from "./components/Search";
+import Home from "./components/home";
+import TV from "./components/tv";
+import Search from "./components/search";
+import Detail from "./components/detail";
 import Header from "./components/Header";
 import GlbalStyle from "./styles/GlobalStyles";
 
@@ -17,6 +18,7 @@ function App() {
       <Route path="/" exact component={Home} />
       <Route path="/tv" component={TV} />
       <Route path="/search" component={Search} />
+      <Route path="/detail/:id" component={Detail} />
     </Router>
   );
 }
