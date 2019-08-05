@@ -13,8 +13,17 @@ class HomeContainer extends React.Component {
 
   async componentDidMount() {
     try {
-      const nowPlaying = await movieApi.nowPlaying();
-      this.setState({ nowPlaying: nowPlaying });
+      const {
+        data: { results: nowPlaying }
+      } = await movieApi.nowPlaying();
+      const {
+        data: { results: upComing }
+      } = await movieApi.upComing();
+      const {
+        data: { results: popular }
+      } = await movieApi.popular();
+
+      this.setState({ nowPlaying, upComing, popular });
     } catch {
       this.setState({ error: "Can't find movies information." });
     } finally {
@@ -22,24 +31,10 @@ class HomeContainer extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    const { nowPlaying } = this.state;
-    if (nowPlaying === nextState.nowPlaying) return false;
-    return true;
-  }
-
   render() {
     const { nowPlaying, upComing, popular, error, loading } = this.state;
-    console.log(nowPlaying);
-    return (
-      <Home
-        nowPlaying={nowPlaying}
-        upComing={upComing}
-        popular={popular}
-        error={error}
-        loading={loading}
-      />
-    );
+    console.log(this.state);
+    return <Home nowPlaying={nowPlaying} upComing={upComing} popular={popular} error={error} loading={loading} />;
   }
 }
 
