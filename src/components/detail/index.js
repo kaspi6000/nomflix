@@ -7,6 +7,24 @@ class DetailContainer extends React.Component {
     error: null,
     loading: true
   };
+
+  async componentDidMount() {
+    const {
+      match: {
+        params: { id }
+      },
+      history: { push }
+    } = this.props;
+    const parseId = parseInt(id);
+    if (isNaN(parseId)) {
+      return push("/");
+    }
+
+    try {
+    } catch {
+    } finally {
+    }
+  }
   render() {
     const { result, error, loading } = this.state;
     return <Detail result={result} error={error} loading={loading} />;

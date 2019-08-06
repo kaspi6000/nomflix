@@ -25,7 +25,7 @@ class HomeContainer extends React.Component {
 
       this.setState({ nowPlaying, upComing, popular });
     } catch {
-      this.setState({ error: "Can't find movies information." });
+      this.setState({ error: "Can't find movie information." });
     } finally {
       this.setState({ loading: false });
     }
@@ -33,7 +33,7 @@ class HomeContainer extends React.Component {
 
   render() {
     const { nowPlaying, upComing, popular, error, loading } = this.state;
-    console.log(this.state);
+    // console.log(this.state);
     return <Home nowPlaying={nowPlaying} upComing={upComing} popular={popular} error={error} loading={loading} />;
   }
 }
