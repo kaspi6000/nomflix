@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Section from "../section";
 import Loader from "../../utils/Loader";
 import { Message } from "../error";
+import Poster from "../poster";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -11,31 +13,43 @@ const Container = styled.div`
 
 const Home = props => {
   const { nowPlaying, upComing, popular, error, loading } = props;
-
+  // console.log(props);
   return loading ? (
     <Loader />
   ) : (
     <Container>
       {nowPlaying && nowPlaying.length > 0 && (
         <Section title="Now Playing">
-          {nowPlaying.map((movie, idx) => {
-            return <div key={idx}>{movie.title}</div>;
+          {nowPlaying.map(movie => {
+            return (
+              <Link key={movie.id} to={`/movie/${movie.id}`}>
+                <Poster imageUrl={movie.poster_path} title={movie.title} rating={movie.vote_average} year={movie.release_date} />
+              </Link>
+            );
           })}
         </Section>
       )}
 
       {upComing && upComing.length > 0 && (
         <Section title="Up Coming">
-          {upComing.map((movie, idx) => {
-            return <div key={idx}>{movie.title}</div>;
+          {upComing.map(movie => {
+            return (
+              <Link key={movie.id} to={`/movie/${movie.id}`}>
+                <Poster imageUrl={movie.poster_path} title={movie.title} rating={movie.vote_average} year={movie.release_date} />
+              </Link>
+            );
           })}
         </Section>
       )}
 
       {popular && popular.length > 0 && (
         <Section title="Popular">
-          {popular.map((movie, idx) => {
-            return <div key={idx}>{movie.title}</div>;
+          {popular.map(movie => {
+            return (
+              <Link key={movie.id} to={`/movie/${movie.id}`}>
+                <Poster imageUrl={movie.poster_path} title={movie.title} rating={movie.vote_average} year={movie.release_date} />
+              </Link>
+            );
           })}
         </Section>
       )}

@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Loader from "../../utils/Loader";
 import Section from "../section";
 import { Message } from "../error";
+import Poster from "../poster";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   padding: 0 20px;
@@ -34,14 +36,18 @@ const Search = props => {
           {movieResults && movieResults.length > 0 && (
             <Section title="Search Movies">
               {movieResults.map(movie => (
-                <div key={movie.id}>{movie.title}</div>
+                <Link key={movie.id} to={`/movie/${movie.id}`}>
+                  <Poster imageUrl={movie.poster_path} title={movie.title} rating={movie.vote_average} year={movie.release_date} />
+                </Link>
               ))}
             </Section>
           )}
           {tvResults && tvResults.length > 0 && (
             <Section title="Search TV Show">
               {tvResults.map(show => (
-                <div key={show.id}>{show.name}</div>
+                <Link key={show.id} to={`/show/${show.id}`}>
+                  <Poster imageUrl={show.poster_path} title={show.name} rating={show.vote_average} year={show.first_air_date} />
+                </Link>
               ))}
             </Section>
           )}

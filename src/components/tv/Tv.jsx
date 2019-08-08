@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Section from "../section";
 import Loader from "../../utils/Loader";
 import { Message } from "../error";
+import Poster from "../poster";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -18,24 +20,36 @@ const Tv = props => {
     <Container>
       {topRated && topRated.length > 0 && (
         <Section title="Top rated TV show">
-          {topRated.map((show, idx) => {
-            return <div key={idx}>{show.name}</div>;
+          {topRated.map(show => {
+            return (
+              <Link key={show.id} to={`/show/${show.id}`}>
+                <Poster imageUrl={show.poster_path} title={show.name} rating={show.vote_average} year={show.first_air_date} />
+              </Link>
+            );
           })}
         </Section>
       )}
 
       {popular && popular.length > 0 && (
         <Section title="Popular TV show">
-          {popular.map((show, idx) => {
-            return <div key={idx}>{show.name}</div>;
+          {popular.map(show => {
+            return (
+              <Link key={show.id} to={`/show/${show.id}`}>
+                <Poster imageUrl={show.poster_path} title={show.name} rating={show.vote_average} year={show.first_air_date} />
+              </Link>
+            );
           })}
         </Section>
       )}
 
       {airingToday && airingToday.length > 0 && (
         <Section title="AiringToday TV show">
-          {airingToday.map((show, idx) => {
-            return <div key={idx}>{show.name}</div>;
+          {airingToday.map(show => {
+            return (
+              <Link key={show.id} to={`/show/${show.id}`}>
+                <Poster imageUrl={show.poster_path} title={show.name} rating={show.vote_average} year={show.first_air_date} />
+              </Link>
+            );
           })}
         </Section>
       )}
