@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
         font-family: 'Kalam', cursive;
         background-color: rgb(20, 20, 20, 1);
         color: white;
-        padding-top: 60px;
+        padding-top: 80px;
     }
 `;
 

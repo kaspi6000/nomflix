@@ -22,7 +22,7 @@ class HomeContainer extends React.Component {
       const {
         data: { results: popular }
       } = await movieApi.popular();
-
+      // throw Error();
       this.setState({ nowPlaying, upComing, popular });
     } catch {
       this.setState({ error: "Can't find movie information." });
@@ -33,7 +33,6 @@ class HomeContainer extends React.Component {
 
   render() {
     const { nowPlaying, upComing, popular, error, loading } = this.state;
-    // console.log(this.state);
     return <Home nowPlaying={nowPlaying} upComing={upComing} popular={popular} error={error} loading={loading} />;
   }
 }

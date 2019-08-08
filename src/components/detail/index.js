@@ -1,11 +1,13 @@
 import React from "react";
 import Detail from "./Detail";
+import { movieApi, tvApi } from "../../utils";
 
 class DetailContainer extends React.Component {
   state = {
     result: null,
     error: null,
-    loading: true
+    loading: true,
+    isMovie: this.props.location.pathname.includes("movie")
   };
 
   async componentDidMount() {
@@ -15,14 +17,21 @@ class DetailContainer extends React.Component {
       },
       history: { push }
     } = this.props;
+    const { isMovie } = this.state;
     const parseId = parseInt(id);
-    if (isNaN(parseId)) {
-      return push("/");
-    }
 
+    if (isNaN(parseId)) return push("/");
+    let result = null;
     try {
+      if (isMovie) {
+        ({ data: result } = await movieApi.movieDetail(parseId));
+      } else {
+        ({ data: result } = await tvApi.showDetail(parseId));
+      }
     } catch {
+      this.setState({ error: "Can't find anything." });
     } finally {
+      this.setState({ loading: false, result });
     }
   }
   render() {
