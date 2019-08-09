@@ -12,6 +12,10 @@ class SearchContainer extends React.Component {
     beforTerm: null
   };
 
+  componentDidMount() {
+    document.title = "Manflix | Search";
+  }
+
   handleSubmit = e => {
     const { searchTerm } = this.state;
     e.preventDefault();
@@ -32,7 +36,7 @@ class SearchContainer extends React.Component {
         data: { results: tvResults }
       } = await tvApi.search(searchTerm);
       // throw Error();
-      this.setState({ movieResults, tvResults });
+      this.setState({ movieResults, tvResults, error: null });
     } catch {
       this.setState({ error: `Can't find ${searchTerm}.` });
     } finally {
@@ -45,7 +49,18 @@ class SearchContainer extends React.Component {
   };
   render() {
     const { movieResults, tvResults, searchTerm, loading, error, beforTerm } = this.state;
-    return <Search movieResults={movieResults} tvResults={tvResults} searchTerm={searchTerm} loading={loading} error={error} handleSubmit={this.handleSubmit} handleChange={this.handleChange} beforTerm={beforTerm} />;
+    return (
+      <Search
+        movieResults={movieResults}
+        tvResults={tvResults}
+        searchTerm={searchTerm}
+        loading={loading}
+        error={error}
+        handleSubmit={this.handleSubmit}
+        handleChange={this.handleChange}
+        beforTerm={beforTerm}
+      />
+    );
   }
 }
 

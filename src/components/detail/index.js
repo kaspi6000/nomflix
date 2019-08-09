@@ -28,10 +28,12 @@ class DetailContainer extends React.Component {
       } else {
         ({ data: result } = await tvApi.showDetail(parseId));
       }
+      this.setState({ result, error: null });
     } catch {
       this.setState({ error: "Can't find anything." });
     } finally {
-      this.setState({ loading: false, result });
+      document.title = `Manflix | ${result.title ? result.title : result.name}`;
+      this.setState({ loading: false });
     }
   }
   render() {

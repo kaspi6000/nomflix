@@ -8,7 +8,7 @@ import Poster from "../poster";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
-  padding: 0px 20px;
+  padding: 20px;
 `;
 
 const Tv = props => {
@@ -23,7 +23,7 @@ const Tv = props => {
           {topRated.map(show => {
             return (
               <Link key={show.id} to={`/show/${show.id}`}>
-                <Poster imageUrl={show.poster_path} title={show.name} rating={show.vote_average} year={show.first_air_date} />
+                <Poster imageUrl={show.poster_path} title={show.name} rating={show.vote_average} year={show.first_air_date} isMovie={false} />
               </Link>
             );
           })}
@@ -35,7 +35,7 @@ const Tv = props => {
           {popular.map(show => {
             return (
               <Link key={show.id} to={`/show/${show.id}`}>
-                <Poster imageUrl={show.poster_path} title={show.name} rating={show.vote_average} year={show.first_air_date} />
+                <Poster imageUrl={show.poster_path} title={show.name} rating={show.vote_average} year={show.first_air_date} isMovie={false} />
               </Link>
             );
           })}
@@ -47,7 +47,7 @@ const Tv = props => {
           {airingToday.map(show => {
             return (
               <Link key={show.id} to={`/show/${show.id}`}>
-                <Poster imageUrl={show.poster_path} title={show.name} rating={show.vote_average} year={show.first_air_date} />
+                <Poster imageUrl={show.poster_path} title={show.name} rating={show.vote_average} year={show.first_air_date} isMovie={false} />
               </Link>
             );
           })}

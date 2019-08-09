@@ -12,6 +12,7 @@ class TvContainer extends React.Component {
   };
 
   async componentDidMount() {
+    document.title = "Manflix | TV Show";
     try {
       const {
         data: { results: topRated }
@@ -23,7 +24,7 @@ class TvContainer extends React.Component {
         data: { results: airingToday }
       } = await tvApi.airingToday();
       // throw Error();
-      this.setState({ topRated, popular, airingToday });
+      this.setState({ topRated, popular, airingToday, error: null });
     } catch {
       this.setState({ error: "Can't find TV Show information." });
     } finally {

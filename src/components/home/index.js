@@ -12,6 +12,7 @@ class HomeContainer extends React.Component {
   };
 
   async componentDidMount() {
+    document.title = "Manflix | Movie";
     try {
       const {
         data: { results: nowPlaying }
@@ -23,7 +24,7 @@ class HomeContainer extends React.Component {
         data: { results: popular }
       } = await movieApi.popular();
       // throw Error();
-      this.setState({ nowPlaying, upComing, popular });
+      this.setState({ nowPlaying, upComing, popular, error: null });
     } catch {
       this.setState({ error: "Can't find movie information." });
     } finally {

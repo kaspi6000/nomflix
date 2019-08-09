@@ -8,7 +8,7 @@ import Poster from "../poster";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
-  padding: 0 20px;
+  padding: 20px;
 `;
 
 const Form = styled.form`
@@ -46,7 +46,7 @@ const Search = props => {
             <Section title="Search TV Show">
               {tvResults.map(show => (
                 <Link key={show.id} to={`/show/${show.id}`}>
-                  <Poster imageUrl={show.poster_path} title={show.name} rating={show.vote_average} year={show.first_air_date} />
+                  <Poster imageUrl={show.poster_path} title={show.name} rating={show.vote_average} year={show.first_air_date} isMovie={false} />
                 </Link>
               ))}
             </Section>

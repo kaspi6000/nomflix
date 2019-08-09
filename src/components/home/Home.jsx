@@ -8,7 +8,7 @@ import Poster from "../poster";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
-  padding: 0px 20px;
+  padding: 20px;
 `;
 
 const Home = props => {
