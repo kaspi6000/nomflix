@@ -10,6 +10,7 @@ class TvContainer extends React.Component {
     error: null,
     loading: true
   };
+  initialState = this.state;
 
   async componentDidMount() {
     document.title = "Manflix | TV Show";
@@ -31,9 +32,22 @@ class TvContainer extends React.Component {
       this.setState({ loading: false });
     }
   }
+
+  componentWillUnmount() {
+    this.setState(this.initialState);
+  }
+
   render() {
     const { topRated, popular, airingToday, error, loading } = this.state;
-    return <Tv topRated={topRated} popular={popular} airingToday={airingToday} error={error} loading={loading} />;
+    return (
+      <Tv
+        topRated={topRated}
+        popular={popular}
+        airingToday={airingToday}
+        error={error}
+        loading={loading}
+      />
+    );
   }
 }
 

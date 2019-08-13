@@ -10,6 +10,7 @@ class HomeContainer extends React.Component {
     error: null,
     loading: true
   };
+  initialState = this.state;
 
   async componentDidMount() {
     document.title = "Manflix | Movie";
@@ -32,9 +33,21 @@ class HomeContainer extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.setState(this.initialState);
+  }
+
   render() {
     const { nowPlaying, upComing, popular, error, loading } = this.state;
-    return <Home nowPlaying={nowPlaying} upComing={upComing} popular={popular} error={error} loading={loading} />;
+    return (
+      <Home
+        nowPlaying={nowPlaying}
+        upComing={upComing}
+        popular={popular}
+        error={error}
+        loading={loading}
+      />
+    );
   }
 }
 
