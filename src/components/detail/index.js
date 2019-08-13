@@ -10,7 +10,28 @@ class DetailContainer extends React.Component {
     isMovie: this.props.location.pathname.includes("movie")
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.handleGetDetail();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const {
+      match: {
+        params: { id }
+      }
+    } = this.props;
+    const {
+      match: {
+        params: { id: prevID }
+      }
+    } = prevProps;
+
+    if (parseInt(id) !== parseInt(prevID)) {
+      this.handleGetDetail();
+    }
+  }
+
+  handleGetDetail = async () => {
     const {
       match: {
         params: { id }
@@ -35,7 +56,8 @@ class DetailContainer extends React.Component {
     } finally {
       this.setState({ loading: false });
     }
-  }
+  };
+
   render() {
     const { result, error, loading } = this.state;
     return <Detail result={result} error={error} loading={loading} />;
