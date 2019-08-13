@@ -13,7 +13,7 @@ const Container = styled.div`
 const Loader = () => (
   <Container>
     <span role="img" aria-label="haha">
-      😁😁😁😁😁😁😁
+      ⏳
     </span>
   </Container>
 );

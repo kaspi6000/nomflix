@@ -23,7 +23,12 @@ const Home = props => {
           {nowPlaying.map(movie => {
             return (
               <Link key={movie.id} to={`/movie/${movie.id}`}>
-                <Poster imageUrl={movie.poster_path} title={movie.title} rating={movie.vote_average} year={movie.release_date} />
+                <Poster
+                  imageUrl={movie.poster_path}
+                  title={movie.title}
+                  rating={movie.vote_average}
+                  year={movie.release_date}
+                />
               </Link>
             );
           })}
@@ -35,7 +40,12 @@ const Home = props => {
           {upComing.map(movie => {
             return (
               <Link key={movie.id} to={`/movie/${movie.id}`}>
-                <Poster imageUrl={movie.poster_path} title={movie.title} rating={movie.vote_average} year={movie.release_date} />
+                <Poster
+                  imageUrl={movie.poster_path}
+                  title={movie.title}
+                  rating={movie.vote_average}
+                  year={movie.release_date}
+                />
               </Link>
             );
           })}
@@ -47,7 +57,12 @@ const Home = props => {
           {popular.map(movie => {
             return (
               <Link key={movie.id} to={`/movie/${movie.id}`}>
-                <Poster imageUrl={movie.poster_path} title={movie.title} rating={movie.vote_average} year={movie.release_date} />
+                <Poster
+                  imageUrl={movie.poster_path}
+                  title={movie.title}
+                  rating={movie.vote_average}
+                  year={movie.release_date}
+                />
               </Link>
             );
           })}

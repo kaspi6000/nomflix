@@ -10,7 +10,28 @@ class DetailContainer extends React.Component {
     isMovie: this.props.location.pathname.includes("movie")
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.handleGetDetail();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const {
+      match: {
+        params: { id }
+      }
+    } = this.props;
+    const {
+      match: {
+        params: { id: prevID }
+      }
+    } = prevProps;
+
+    if (parseInt(id) !== parseInt(prevID)) {
+      this.handleGetDetail();
+    }
+  }
+
+  handleGetDetail = async () => {
     const {
       match: {
         params: { id }
@@ -29,13 +50,14 @@ class DetailContainer extends React.Component {
         ({ data: result } = await tvApi.showDetail(parseId));
       }
       this.setState({ result, error: null });
+      document.title = `Manflix | ${result.title ? result.title : result.name}`;
     } catch {
       this.setState({ error: "Can't find anything." });
     } finally {
-      document.title = `Manflix | ${result.title ? result.title : result.name}`;
       this.setState({ loading: false });
     }
-  }
+  };
+
   render() {
     const { result, error, loading } = this.state;
     return <Detail result={result} error={error} loading={loading} />;

@@ -8,7 +8,8 @@ const params = {
   params: {
     api_key: REACT_APP_API_KEY,
     language: "ko"
-  }
+  },
+  timeout: 3000
 };
 
 export const movieApi = {

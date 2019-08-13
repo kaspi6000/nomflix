@@ -4,8 +4,13 @@ import styled from "styled-components";
 import Loader from "../../utils/Loader";
 import { Movie, TvOff } from "@material-ui/icons";
 import { Message } from "../error";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import ReactCountryFlag from "react-country-flag";
+import Poster from "../poster";
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 const Container = styled.div`
   height: calc(100vh - 50px);
@@ -72,37 +77,39 @@ const Overview = styled.div`
   font-size: 12px;
   opacity: 0.7;
   line-height: 1.5;
-  width: 50%;
+  width: 90%;
+  margin-bottom: 20px;
 `;
 
 const Section = styled.div`
   height: 30%;
   background-color: rgba(255, 255, 255, 0.3);
-  margin: 25px 0;
+  margin-bottom: 35px;
   position: relative;
-  overflow: hidden;
+  overflow: ${props => (props.season ? "scroll" : "hidden")};
+  ${props =>
+    props.season &&
+    "display: grid; grid-template-columns: repeat(auto-fill, 120px); grid-gap: 20px; grid-auto-flow: dense; padding: 10px 42px"}
 `;
 
-const CompanyImage = styled.div`
-  background: url(${props => props.bgImage}) no-repeat;
-  background-size: contain;
-  height: 80%;
-  background-position: center center;
-  position: absolute;
-  top: 0;
-  left: ${props => props.sequence * 33}%;
-  width: 30%;
-  margin: 33px 5px;
-  // transform: translateX(-105%);
-`;
+// const CompanyImage = styled.div`
+//   background: url(${props => props.bgImage}) no-repeat;
+//   background-size: contain;
+//   height: 80%;
+//   background-position: center center;
+//   position: absolute;
+//   top: 0;
+//   left: ${props => props.sequence * 33}%;
+//   width: 30%;
+//   margin: 33px 5px;
+//   // transform: translateX(-105%);
+// `;
 
 const SectionTitle = styled.span`
-  position: absolute;
-  top: 0;
-  left: 0;
-  margin: 5px 5px;
   font-size: 20px;
-  opacity: 0.9;
+  opacity: 0.8;
+  display: flex;
+  justify-content: center;
 `;
 
 const VideoLink = styled(Link)`
@@ -113,12 +120,25 @@ const Detail = props => {
   const { result, error, loading, isMovie = true } = props;
   const { REACT_APP_IMAGE_API_URL } = process.env;
   console.log(props);
+
+  let settings = {
+    dots: false,
+    arrows: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    cssEase: "linear"
+  };
+
   return loading ? (
     <Loader />
   ) : (
     <Container>
       {error ? (
-        <Message text={error} />
+        <Message text={error} color="#e74c3c" />
       ) : (
         <>
           <Backdrop
@@ -127,9 +147,9 @@ const Detail = props => {
           <Content>
             {result.poster_path === null ? (
               isMovie ? (
-                <Movie style={{ width: "100%", height: "100%" }} />
+                <Movie style={{ width: "50%", height: "50%" }} />
               ) : (
-                <TvOff style={{ width: "100%", height: "100%" }} />
+                <TvOff style={{ width: "50%", height: "50%" }} />
               )
             ) : (
               <Cover
@@ -138,18 +158,19 @@ const Detail = props => {
             )}
             <Data>
               <Title>
-                <ReactCountryFlag
-                  code={
-                    result.production_countries
-                      ? result.production_countries[0].iso_3166_1
-                      : result.origin_country[0]
-                  }
-                  styleProps={{ marginRight: "5px" }}
-                  svg
-                />
-                {result.original_title
-                  ? result.original_title
-                  : result.original_name}
+                {result.production_countries && result.origin_country ? (
+                  <ReactCountryFlag
+                    code={
+                      result.production_countries
+                        ? result.production_countries[0].iso_3166_1
+                        : result.origin_country[0]
+                    }
+                    styleProps={{ marginRight: "5px" }}
+                    svg
+                  />
+                ) : null}
+
+                {result.title ? result.title : result.name}
               </Title>
               <VideoLink to="/collections">🎬 Goning to videos</VideoLink>
               <ItemContainer>
@@ -174,22 +195,52 @@ const Detail = props => {
                 </Item>
               </ItemContainer>
               <Overview>{result.overview}</Overview>
+              <SectionTitle>Production Companies</SectionTitle>
               <Section>
-                <SectionTitle>Production Companies</SectionTitle>
-                {result.production_companies &&
-                  result.production_companies.map((company, idx) => (
-                    <CompanyImage
-                      key={company.id}
-                      sequence={idx}
-                      bgImage={
-                        company.logo_path
-                          ? `${REACT_APP_IMAGE_API_URL}${company.logo_path}`
-                          : ""
-                      }
-                    />
+                <Slider {...settings}>
+                  {result.production_companies &&
+                    result.production_companies.map(company => (
+                      <li key={company.id}>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            height: 240
+                          }}
+                        >
+                          {company.logo_path ? (
+                            <img
+                              src={`${REACT_APP_IMAGE_API_URL}${
+                                company.logo_path
+                              }`}
+                              style={{
+                                width: "100%",
+                                maxHeight: "85%",
+                                marginTop: 20
+                              }}
+                            />
+                          ) : (
+                            <span>{company.name}</span>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                </Slider>
+              </Section>
+              <SectionTitle>Seasons</SectionTitle>
+              <Section season={true}>
+                {result.seasons &&
+                  result.seasons.map(season => (
+                    <Link key={season.id} to={`/show/${season.id}`}>
+                      <Poster
+                        key={season.id}
+                        imageUrl={season.poster_path}
+                        title={season.name ? season.name : season.title}
+                        year={season.air_date}
+                      />
+                    </Link>
                   ))}
               </Section>
-              <Section />
             </Data>
           </Content>
         </>
