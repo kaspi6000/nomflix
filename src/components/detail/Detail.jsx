@@ -4,13 +4,14 @@ import styled from "styled-components";
 import Loader from "../../utils/Loader";
 import { Movie, TvOff } from "@material-ui/icons";
 import { Message } from "../error";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ReactCountryFlag from "react-country-flag";
 import Poster from "../poster";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import Imdb from "../../images/imdb.png";
 
 const Container = styled.div`
   height: calc(100vh - 50px);
@@ -158,13 +159,25 @@ const Detail = props => {
 
                 {result.title ? result.title : result.name}
               </Title>
-              <VideoLink to="/collections">🎬 Goning to videos</VideoLink>
+              <VideoLink to="/collections">
+                <span role="img" aria-label="video">
+                  🎬
+                </span>{" "}
+                Goning to videos
+              </VideoLink>
               <ItemContainer>
                 <Item>{result.release_date ? result.release_date.substring(0, 4) : result.first_air_date.substring(0, 4)}</Item>
                 <Divider>•</Divider>
                 <Item>{result.runtime ? result.runtime : result.episode_run_time} min</Item>
                 <Divider>•</Divider>
-                <Item>{result.genres && result.genres.map((genre, idx) => (idx + 1 === result.genres.length ? genre.name : `${genre.name} / `))}</Item>
+                <Item>
+                  {result.genres && result.genres.map((genre, idx) => (idx + 1 === result.genres.length ? genre.name : `${genre.name} / `))}
+                  {result.imdb_id && (
+                    <a href={`https://www.imdb.com/title/${result.imdb_id}`} target="blank">
+                      <img src={Imdb} alt="" />
+                    </a>
+                  )}
+                </Item>
               </ItemContainer>
               <Overview>{result.overview}</Overview>
               <SectionTitle>Production Companies</SectionTitle>
@@ -188,6 +201,7 @@ const Detail = props => {
                                 maxHeight: "85%",
                                 marginTop: 20
                               }}
+                              alt=""
                             />
                           ) : (
                             <span>{company.name}</span>
