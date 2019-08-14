@@ -86,10 +86,8 @@ const Section = styled.div`
   background-color: rgba(255, 255, 255, 0.3);
   margin-bottom: 35px;
   position: relative;
-  overflow: ${props => (props.season ? "scroll" : "hidden")};
-  ${props =>
-    props.season &&
-    "display: grid; grid-template-columns: repeat(auto-fill, 120px); grid-gap: 20px; grid-auto-flow: dense; padding: 10px 42px"}
+  overflow-y: ${props => (props.season ? "scroll" : "hidden")};
+  ${props => props.season && "display: grid; grid-template-columns: repeat(auto-fill, 120px); grid-gap: 20px; grid-auto-flow: dense; padding: 10px 42px"}
 `;
 
 // const CompanyImage = styled.div`
@@ -141,9 +139,7 @@ const Detail = props => {
         <Message text={error} color="#e74c3c" />
       ) : (
         <>
-          <Backdrop
-            bgImage={`${REACT_APP_IMAGE_API_URL}${result.backdrop_path}`}
-          />
+          <Backdrop bgImage={`${REACT_APP_IMAGE_API_URL}${result.backdrop_path}`} />
           <Content>
             {result.poster_path === null ? (
               isMovie ? (
@@ -152,47 +148,23 @@ const Detail = props => {
                 <TvOff style={{ width: "50%", height: "50%" }} />
               )
             ) : (
-              <Cover
-                bgImage={`${REACT_APP_IMAGE_API_URL}/${result.poster_path}`}
-              />
+              <Cover bgImage={`${REACT_APP_IMAGE_API_URL}/${result.poster_path}`} />
             )}
             <Data>
               <Title>
-                {result.production_countries && result.origin_country ? (
-                  <ReactCountryFlag
-                    code={
-                      result.production_countries
-                        ? result.production_countries[0].iso_3166_1
-                        : result.origin_country[0]
-                    }
-                    styleProps={{ marginRight: "5px" }}
-                    svg
-                  />
+                {(result.production_countries && result.production_countries.length > 0) || (result.origin_country && result.origin_country.length > 0) ? (
+                  <ReactCountryFlag code={result.production_countries ? result.production_countries[0].iso_3166_1 : result.origin_country[0]} styleProps={{ marginRight: "5px" }} svg />
                 ) : null}
 
                 {result.title ? result.title : result.name}
               </Title>
               <VideoLink to="/collections">🎬 Goning to videos</VideoLink>
               <ItemContainer>
-                <Item>
-                  {result.release_date
-                    ? result.release_date.substring(0, 4)
-                    : result.first_air_date.substring(0, 4)}
-                </Item>
+                <Item>{result.release_date ? result.release_date.substring(0, 4) : result.first_air_date.substring(0, 4)}</Item>
                 <Divider>•</Divider>
-                <Item>
-                  {result.runtime ? result.runtime : result.episode_run_time}{" "}
-                  min
-                </Item>
+                <Item>{result.runtime ? result.runtime : result.episode_run_time} min</Item>
                 <Divider>•</Divider>
-                <Item>
-                  {result.genres &&
-                    result.genres.map((genre, idx) =>
-                      idx + 1 === result.genres.length
-                        ? genre.name
-                        : `${genre.name} / `
-                    )}
-                </Item>
+                <Item>{result.genres && result.genres.map((genre, idx) => (idx + 1 === result.genres.length ? genre.name : `${genre.name} / `))}</Item>
               </ItemContainer>
               <Overview>{result.overview}</Overview>
               <SectionTitle>Production Companies</SectionTitle>
@@ -210,9 +182,7 @@ const Detail = props => {
                         >
                           {company.logo_path ? (
                             <img
-                              src={`${REACT_APP_IMAGE_API_URL}${
-                                company.logo_path
-                              }`}
+                              src={`${REACT_APP_IMAGE_API_URL}${company.logo_path}`}
                               style={{
                                 width: "100%",
                                 maxHeight: "85%",
@@ -232,12 +202,7 @@ const Detail = props => {
                 {result.seasons &&
                   result.seasons.map(season => (
                     <Link key={season.id} to={`/show/${season.id}`}>
-                      <Poster
-                        key={season.id}
-                        imageUrl={season.poster_path}
-                        title={season.name ? season.name : season.title}
-                        year={season.air_date}
-                      />
+                      <Poster key={season.id} imageUrl={season.poster_path} title={season.name ? season.name : season.title} year={season.air_date} />
                     </Link>
                   ))}
               </Section>
