@@ -6,6 +6,7 @@ import TV from "./components/tv";
 import Search from "./components/search";
 import Detail from "./components/detail";
 import Header from "./components/Header";
+import Videos from "./components/videos";
 import GlbalStyle from "./styles/GlobalStyles";
 
 const history = createBrowserHistory();
@@ -21,6 +22,7 @@ function App() {
         <Route path="/search" component={Search} />
         <Route path="/movie/:id" component={Detail} />
         <Route path="/show/:id" component={Detail} />
+        <Route path="/collections" component={Videos} />
       </Switch>
     </Router>
   );

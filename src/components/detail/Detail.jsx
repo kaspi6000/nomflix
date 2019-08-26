@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Loader from "../../utils/Loader";
 import { Movie, TvOff } from "@material-ui/icons";
 import { Message } from "../error";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ReactCountryFlag from "react-country-flag";
 import Poster from "../poster";
 

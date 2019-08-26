@@ -9,7 +9,7 @@ const params = {
     api_key: REACT_APP_API_KEY,
     language: "ko"
   },
-  timeout: 3000
+  timeout: 6000
 };
 
 export const movieApi = {
@@ -26,7 +26,7 @@ export const movieApi = {
     axios({
       ...params,
       url: "/search/movie",
-      params: { ...params.params, query: encodeURIComponent(term) }
+      params: { ...params.params, query: term }
     })
 };
 
@@ -44,6 +44,6 @@ export const tvApi = {
     axios({
       ...params,
       url: "/search/tv",
-      params: { ...params.params, query: encodeURIComponent(term) }
+      params: { ...params.params, query: term }
     })
 };

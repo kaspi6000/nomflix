@@ -48,7 +48,14 @@ class SearchContainer extends React.Component {
     this.setState({ [name]: e.target.value });
   };
   render() {
-    const { movieResults, tvResults, searchTerm, loading, error, beforTerm } = this.state;
+    const {
+      movieResults,
+      tvResults,
+      searchTerm,
+      loading,
+      error,
+      beforTerm
+    } = this.state;
     return (
       <Search
         movieResults={movieResults}
